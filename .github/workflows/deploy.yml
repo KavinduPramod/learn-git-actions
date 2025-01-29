@@ -22,7 +22,7 @@ jobs: # The jobs to run
       - name: Setup Node.js # The name of the step
         uses: actions/setup-node@v2 # The action to use
         with:
-          node-version: '16' # The version of Node.js to use
+          node-version: '18' # The version of Node.js to use
 
       - name: Install dependencies # The name of the step
         run: npm install # The command to run
