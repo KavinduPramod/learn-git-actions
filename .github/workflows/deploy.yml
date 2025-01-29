@@ -1,0 +1,32 @@
+name : build and deploy react app # The name of the workflow (visible in GitHub Actions UI)
+
+on: # The event(s) that trigger the workflow basically this array contains the events that will trigger the workflow
+  push:
+    branches:
+      - master # The branch to trigger the workflow on
+  pull_request:
+    branches:
+      - master # The branch to trigger the workflow on
+
+      # whenever a push or pull request is made to the master branch, the workflow will be triggered
+
+jobs: # The jobs to run
+  build: # The name of the job
+    runs-on: ubuntu-latest # The OS to run the job on
+
+    # now the steps to run in the job
+    steps:
+      - name: Checkout # The name of the step
+        uses: actions/checkout@v3 # The action to use
+
+      - name: Setup Node.js # The name of the step
+        uses: actions/setup-node@v2 # The action to use
+        with:
+          node-version: '16' # The version of Node.js to use
+
+      - name: Install dependencies and build # The name of the step
+        run: npm install # The command to run
+        run: npm run build # The command to run
+
+
+
