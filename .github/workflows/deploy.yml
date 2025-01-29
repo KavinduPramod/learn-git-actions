@@ -24,8 +24,10 @@ jobs: # The jobs to run
         with:
           node-version: '16' # The version of Node.js to use
 
-      - name: Install dependencies and build # The name of the step
+      - name: Install dependencies # The name of the step
         run: npm install # The command to run
+
+      - name: Build # The name of the step
         run: npm run build # The command to run
 
 
