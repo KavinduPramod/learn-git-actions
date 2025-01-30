@@ -26,6 +26,12 @@ function App() {
 
   return (
     <div className="App">
+      <div>
+        <h2>Developed by Robinson</h2>
+      </div>
+      <div>
+
+      </div>
       <h1>To-Do List</h1>
       <input
         type="text"
