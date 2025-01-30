@@ -16,19 +16,19 @@ jobs: # The jobs to run
 
     # now the steps to run in the job
     steps:
-      # - name: Checkout # The name of the step
-      #   uses: actions/checkout@v3 # The action to use
+      - name: Checkout # The name of the step
+        uses: actions/checkout@v3 # The action to use
 
-      # - name: Setup Node.js # The name of the step
-      #   uses: actions/setup-node@v2 # The action to use
-      #   with:
-      #     node-version: '18' # The version of Node.js to use
+      - name: Setup Node.js # The name of the step
+        uses: actions/setup-node@v2 # The action to use
+        with:
+          node-version: '18' # The version of Node.js to use
 
-      # - name: Install dependencies # The name of the step
-      #   run: npm install # The command to run
+      - name: Install dependencies # The name of the step
+        run: npm install # The command to run
 
-      # - name: Build # The name of the step
-      #   run: npm run build # The command to run
+      - name: Build # The name of the step
+        run: npm run build # The command to run
 
       - name: Setup SSH Key
         run: |
@@ -37,10 +37,12 @@ jobs: # The jobs to run
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.DROPLET_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Connect to Droplet and Run Commands
+      - name: Deploy Build to Droplet
         run: |
-          ssh -o StrictHostKeyChecking=no dev@${{ secrets.DROPLET_HOST }} "echo 'Connected to Droplet successfully!'"
+          rsync -avz --delete ./build/ dev@${{ secrets.DROPLET_HOST }}:/var/www/react-app
 
-
+      - name: Restart Nginx
+        run: |
+          ssh -o StrictHostKeyChecking=no dev@${{ secrets.DROPLET_HOST }} "sudo systemctl restart nginx"
 
 
