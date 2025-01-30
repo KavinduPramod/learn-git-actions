@@ -1,34 +1,31 @@
-name : build and deploy react app # The name of the workflow (visible in GitHub Actions UI)
+name: Build and Deploy React App # Name of the workflow (visible in GitHub Actions UI)
 
-on: # The event(s) that trigger the workflow basically this array contains the events that will trigger the workflow
+on: # Trigger events
   push:
     branches:
-      - master # The branch to trigger the workflow on
+      - master # Runs on push to master
   pull_request:
     branches:
-      - master # The branch to trigger the workflow on
+      - master # Runs on pull request to master
 
-      # whenever a push or pull request is made to the master branch, the workflow will be triggered
+jobs:
+  build: # Job name
+    runs-on: ubuntu-latest # OS for the job
 
-jobs: # The jobs to run
-  build: # The name of the job
-    runs-on: ubuntu-latest # The OS to run the job on
-
-    # now the steps to run in the job
     steps:
-      - name: Checkout # The name of the step
-        uses: actions/checkout@v3 # The action to use
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - name: Setup Node.js # The name of the step
-        uses: actions/setup-node@v2 # The action to use
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: '18' # The version of Node.js to use
+          node-version: '18' # Node.js version
 
-      - name: Install dependencies # The name of the step
-        run: npm install # The command to run
+      - name: Install Dependencies
+        run: npm install
 
-      - name: Build # The name of the step
-        run: npm run build # The command to run
+      - name: Build React App
+        run: npm run build
 
       - name: Setup SSH Key
         run: |
@@ -38,17 +35,18 @@ jobs: # The jobs to run
           ssh-keyscan -H ${{ secrets.DROPLET_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy Build to Droplet
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: dev
+          key: ${{ secrets.PRIVATE_SSH_KEY }}
           source: "dist/*"
-          target: "/var/www/react-app" 
+          target: "/var/www/react-app"
 
       - name: Restart Nginx
-          uses: appleboy/ssh-action@v0.1.7
-          with:
-            host: ${{ secrets.DROPLET_HOST }}
-            username: dev
-            key: ${{ secrets.PRIVATE_SSH_KEY }}
-            script: |
-              sudo systemctl restart nginx
-
-
-
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: dev
+          key: ${{ secrets.PRIVATE_SSH_KEY }}
+          script: sudo systemctl restart nginx
