@@ -39,7 +39,7 @@ jobs: # The jobs to run
 
       - name: Deploy Build to Droplet
         run: |
-          rsync -avz --delete ./build/ dev@${{ secrets.DROPLET_HOST }}:/var/www/react-app
+          rsync -avz --delete ./dist/ dev@${{ secrets.DROPLET_HOST }}:/var/www/react-app
 
       - name: Restart Nginx
         run: |
