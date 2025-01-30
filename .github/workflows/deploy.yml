@@ -35,7 +35,9 @@ jobs: # The jobs to run
         with:
           host: ${{ secrets.DROPLET_HOST }}
           username: dev
-          key: ${{ secrets.DROPLET_SSH_KEY }}
+          password: dev123
+          port: 22
+          key: ${{ secrets.DROPLET_KEY }}
           script: |
             echo "Logged in to droplet"
 
