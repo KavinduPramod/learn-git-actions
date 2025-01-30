@@ -40,7 +40,7 @@ jobs:
           host: ${{ secrets.DROPLET_HOST }}
           username: dev
           key: ${{ secrets.PRIVATE_SSH_KEY }}
-          source: "dist/*"
+          source: "dist/"
           target: "/var/www/react-app"
 
       - name: Restart Nginx
