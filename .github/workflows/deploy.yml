@@ -30,14 +30,14 @@ jobs: # The jobs to run
       # - name: Build # The name of the step
       #   run: npm run build # The command to run
 
-      - name: test connection
+      - name: login to droplet
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.DROPLET_HOST }}
-          username: ${{ secrets.DROPLET_USER }}
-          key: ${{ secrets.PRIVATE_SSH_KEY }}
+          host: ${{ secrets.DROPLET_IP }}
+          username: ${{ secrets.DROPLET_USERNAME }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
           script: |
-            ssh -o StrictHostKeyChecking=no -vvv dev@${{ secrets.DROPLET_HOST }} "echo SSH connection successful"
+            echo "Logged in to droplet"
 
 
 
