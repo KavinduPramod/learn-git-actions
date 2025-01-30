@@ -37,7 +37,7 @@ jobs: # The jobs to run
           username: ${{ secrets.DROPLET_USER }}
           key: ${{ secrets.PRIVATE_SSH_KEY }}
           script: |
-            ssh -o StrictHostKeyChecking=no -vvv dev@${{ secrets.DROPLET_HOST }} "echo SSH connection successfuly"
+            ssh -o StrictHostKeyChecking=no -vvv dev@${{ secrets.DROPLET_HOST }} "echo SSH connection successful"
 
 
 
