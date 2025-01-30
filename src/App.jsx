@@ -31,7 +31,7 @@ function App() {
         type="text"
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
-        placeholder="Add a new task"
+        placeholder="Type your task here..."
       />
       <button onClick={addTask}>Add Task</button>
       <ul>
