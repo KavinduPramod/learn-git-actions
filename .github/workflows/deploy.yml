@@ -32,7 +32,7 @@ jobs: # The jobs to run
 
       - name : debug ssh key
         run: |
-          echo "${{ secrets.DROPLET_SSH_KEY }}" | tr -d '\n' | sha256sum
+          echo "${{ secrets.PRIVATE_SSH_KEY }}" | tr -d '\n' | sha256sum
 
 
 
