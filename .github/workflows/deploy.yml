@@ -30,18 +30,23 @@ jobs: # The jobs to run
       # - name: Build # The name of the step
       #   run: npm run build # The command to run
 
-      - name: login to droplet
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Add host key to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -t ed25519 165.22.97.154 >> ~/.ssh/known_hosts
+
+      - name: Login to droplet
         uses: appleboy/ssh-action@master
         with:
           host: 165.22.97.154
           username: dev
-          key: -----BEGIN OPENSSH PRIVATE KEY-----
-              b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
-              QyNTUxOQAAACBEcmBKyWbE6iaI1EfdLGm4wswdg89+GHq78oRjWlkwzAAAAKDwQhXM8EIV
-              zAAAAAtzc2gtZWQyNTUxOQAAACBEcmBKyWbE6iaI1EfdLGm4wswdg89+GHq78oRjWlkwzA
-              AAAECWUdEmPCUNVfyFPyb9jhGb0AMOFQu/HvzZcGAQdPn1tURyYErJZsTqJojUR90sabjC
-              zB2Dz34YervyhGNaWTDMAAAAGHJvYmluc29uQERFU0tUT1AtVTlMQlJPSwECAwQF
-              -----END OPENSSH PRIVATE KEY-----
+          key: ~/.ssh/id_rsa
           script: |
             echo "Logged in to droplet"
 
