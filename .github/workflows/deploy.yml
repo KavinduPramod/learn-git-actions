@@ -30,5 +30,12 @@ jobs: # The jobs to run
       - name: Build # The name of the step
         run: npm run build # The command to run
 
-
+      - name : test droplet connection
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: ${{ secrets.DROPLET_USERNAME }}
+          key: ${{ secrets.DROPLET_KEY }}
+          script: |
+            echo "hello world"
 
