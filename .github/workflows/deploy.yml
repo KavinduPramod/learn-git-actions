@@ -30,18 +30,7 @@ jobs: # The jobs to run
       # - name: Build # The name of the step
       #   run: npm run build # The command to run
 
-      - name: Set up SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-
-      - name: Add host key to known_hosts
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -t ed25519 ${{ secrets.DROPLET_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Test SSH connection
+      - name: test connection
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DROPLET_HOST }}
