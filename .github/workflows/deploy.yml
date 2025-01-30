@@ -38,11 +38,17 @@ jobs: # The jobs to run
           ssh-keyscan -H ${{ secrets.DROPLET_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy Build to Droplet
-        run: |
-          rsync -avz --delete ./dist/ dev@${{ secrets.DROPLET_HOST }}:/var/www/react-app
+          source: "dist/*"
+          target: "/var/www/react-app" 
 
       - name: Restart Nginx
-        run: |
-          ssh -o StrictHostKeyChecking=no dev@${{ secrets.DROPLET_HOST }} "sudo systemctl restart nginx"
+          uses: appleboy/ssh-action@v0.1.7
+          with:
+            host: ${{ secrets.DROPLET_HOST }}
+            username: dev
+            key: ${{ secrets.PRIVATE_SSH_KEY }}
+            script: |
+              sudo systemctl restart nginx
+
 
 
