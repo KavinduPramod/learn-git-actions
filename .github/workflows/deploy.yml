@@ -30,17 +30,16 @@ jobs: # The jobs to run
       # - name: Build # The name of the step
       #   run: npm run build # The command to run
 
-      - name : debug ssh key
-        run: echo "${{ secrets.PRIVATE_SSH_KEY }}"
-        
+      - name: Debug SSH Key
+          run: |
+            echo "${{ secrets.DROPLET_SSH_KEY }}" | tr -d '\n' | sha256sum
 
-
-      - name : test droplet connection
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DROPLET_HOST }}
-          username: ${{ secrets.DROPLET_USERNAME }}
-          key: ${{ secrets.PRIVATE_SSH_KEY }}
-          script: |
-            echo "hello world"
+      # - name : test droplet connection
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.DROPLET_HOST }}
+      #     username: ${{ secrets.DROPLET_USERNAME }}
+      #     key: ${{ secrets.PRIVATE_SSH_KEY }}
+      #     script: |
+      #       echo "hello world"
 
