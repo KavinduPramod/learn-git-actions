@@ -16,19 +16,24 @@ jobs: # The jobs to run
 
     # now the steps to run in the job
     steps:
-      - name: Checkout # The name of the step
-        uses: actions/checkout@v3 # The action to use
+      # - name: Checkout # The name of the step
+      #   uses: actions/checkout@v3 # The action to use
 
-      - name: Setup Node.js # The name of the step
-        uses: actions/setup-node@v2 # The action to use
-        with:
-          node-version: '18' # The version of Node.js to use
+      # - name: Setup Node.js # The name of the step
+      #   uses: actions/setup-node@v2 # The action to use
+      #   with:
+      #     node-version: '18' # The version of Node.js to use
 
-      - name: Install dependencies # The name of the step
-        run: npm install # The command to run
+      # - name: Install dependencies # The name of the step
+      #   run: npm install # The command to run
 
-      - name: Build # The name of the step
-        run: npm run build # The command to run
+      # - name: Build # The name of the step
+      #   run: npm run build # The command to run
+
+      - name : debug ssh key
+        run: echo "${{ secrets.PRIVATE_SSH_KEY }}"
+        
+
 
       - name : test droplet connection
         uses: appleboy/ssh-action@master
