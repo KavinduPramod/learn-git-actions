@@ -35,7 +35,7 @@ jobs: # The jobs to run
         with:
           host: ${{ secrets.DROPLET_HOST }}
           username: ${{ secrets.DROPLET_USERNAME }}
-          key: ${{ secrets.DROPLET_KEY }}
+          key: ${{ secrets.PRIVATE_SSH_KEY }}
           script: |
             echo "hello world"
 
