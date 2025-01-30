@@ -30,25 +30,16 @@ jobs: # The jobs to run
       # - name: Build # The name of the step
       #   run: npm run build # The command to run
 
-      - name: Set up SSH key
+      - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.DROPLET_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Add host key to known_hosts
+      - name: Connect to Droplet and Run Commands
         run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -t ed25519 165.22.97.154 >> ~/.ssh/known_hosts
-
-      - name: Login to droplet
-        uses: appleboy/ssh-action@master
-        with:
-          host: 165.22.97.154
-          username: dev
-          key: ~/.ssh/id_rsa
-          script: |
-            echo "Logged in to droplet"
+          ssh -o StrictHostKeyChecking=no dev@${{ secrets.DROPLET_HOST }} "echo 'Connected to Droplet successfully!'"
 
 
 
