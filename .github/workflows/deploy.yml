@@ -33,11 +33,15 @@ jobs: # The jobs to run
       - name: login to droplet
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.DROPLET_HOST }}
+          host: 165.22.97.154
           username: dev
-          password: dev123
-          port: 22
-          key: ${{ secrets.DROPLET_KEY }}
+          key: -----BEGIN OPENSSH PRIVATE KEY-----
+              b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+              QyNTUxOQAAACBEcmBKyWbE6iaI1EfdLGm4wswdg89+GHq78oRjWlkwzAAAAKDwQhXM8EIV
+              zAAAAAtzc2gtZWQyNTUxOQAAACBEcmBKyWbE6iaI1EfdLGm4wswdg89+GHq78oRjWlkwzA
+              AAAECWUdEmPCUNVfyFPyb9jhGb0AMOFQu/HvzZcGAQdPn1tURyYErJZsTqJojUR90sabjC
+              zB2Dz34YervyhGNaWTDMAAAAGHJvYmluc29uQERFU0tUT1AtVTlMQlJPSwECAwQF
+              -----END OPENSSH PRIVATE KEY-----
           script: |
             echo "Logged in to droplet"
 
