@@ -34,14 +34,15 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.DROPLET_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy Build to Droplet
-        uses: appleboy/scp-action@v0.1.4
+      - name: Deploy Using Rsync
+        uses: burnett01/rsync-deploy-action@v5
         with:
-          host: ${{ secrets.DROPLET_HOST }}
-          username: dev
-          key: ${{ secrets.PRIVATE_SSH_KEY }}
-          source: "dist/*"
-          target: "/var/www/react-app"
+          switches: -avz --delete
+          path: dist/ # Source (includes contents, but not the folder itself)
+          remote_path: /var/www/react-app
+          remote_host: ${{ secrets.DROPLET_HOST }}
+          remote_user: dev
+          remote_key: ${{ secrets.PRIVATE_SSH_KEY }}
 
       - name: Restart Nginx
         uses: appleboy/ssh-action@v0.1.7
