@@ -4,16 +4,19 @@ import "./App.css";
 function App() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
+
   const addTask = () => {
     if (newTask.trim() !== "") {
       setTasks([...tasks, { text: newTask, completed: false }]);
       setNewTask("");
     }
   };
+
   const deleteTask = (index) => {
     const newTasks = tasks.filter((_, i) => i !== index);
     setTasks(newTasks);
   };
+
   const toggleComplete = (index) => {
     const newTasks = tasks.map((task, i) =>
       i === index ? { ...task, completed: !task.completed } : task
@@ -24,7 +27,17 @@ function App() {
   return (
     <div className="App">
       <div>
-        <h4>Developed by Robinson</h4>
+        <h4>This project was developed to learn GitHub Actions</h4>
+        <p>
+          Click here to see the documentation:{" "}
+          <a
+            href="https://github.com/KavinduPramod/learn-git-actions/blob/master/README.md"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Documentation
+          </a>
+        </p>
       </div>
       <div></div>
       <h1>To-Do List</h1>
